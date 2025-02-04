@@ -4,64 +4,105 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>EmployeeModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center mb-4" style="background-color:aqua">Create Employee</h2>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @if (ViewBag.successMessage != null)
+        {
+            <script>
+                window.onload = function () {
+                    var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                    successModal.show();
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    // Redirect on modal close
+                    document.getElementById('modalOkButton').onclick = function () {
+                        window.location.href = '@Url.Action("GetAllEmployeesData", "Employee")';
+                    };
+                };
+            </script>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.AddressId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AddressId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AddressId, "", new { @class = "text-danger" })
+            <!-- Bootstrap Modal for Success Message -->
+            <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="successModalLabel">Success</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <h4>@ViewBag.successMessage</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="modalOkButton" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <br/>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-primary" />
+        }
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.FirstName, "First Name", htmlAttributes: new { @class = "form-label fw-bold" })
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.LastName, "Last Name", htmlAttributes: new { @class = "form-label fw-bold" })
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label fw-bold" })
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "form-label fw-bold" })
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Address.Details, "Address Details", htmlAttributes: new { @class = "form-label fw-bold" })
+                    @Html.EditorFor(model => model.Address.Details, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+                    @Html.ValidationMessageFor(model => model.Address.Details, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Address.City, htmlAttributes: new { @class = "form-label fw-bold" })
+                    @Html.EditorFor(model => model.Address.City, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+                    @Html.ValidationMessageFor(model => model.Address.City, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Address.State, htmlAttributes: new { @class = "form-label fw-bold" })
+                    @Html.EditorFor(model => model.Address.State, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+                    @Html.ValidationMessageFor(model => model.Address.State, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Address.Country, htmlAttributes: new { @class = "form-label fw-bold" })
+                    @Html.EditorFor(model => model.Address.Country, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+                    @Html.ValidationMessageFor(model => model.Address.Country, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <input type="submit" value="Create" class="btn btn-primary shadow rounded-3 px-4 py-2" />
+                    @Html.ActionLink("Back to List", "GetAllEmployeesData", null, new { @class = "btn btn-secondary shadow rounded-3 px-4 py-2" })
+                </div>
             </div>
-        </div>
+        }
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+
+

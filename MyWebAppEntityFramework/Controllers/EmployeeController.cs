@@ -25,10 +25,27 @@ namespace MyWebAppEntityFramework.Controllers
         {
             if (ModelState.IsValid)
             {
-                repository.AddNewEmployee(empModel);
-
+                int createdId = repository.AddNewEmployee(empModel);
+                if (createdId > 0)
+                {
+                    ModelState.Clear();
+                    ViewBag.successMessage = "Data Added Sucessfully";
+                    return RedirectToAction("GetAllEmployeesData");
+                }
             }
             return View();
+        }
+        [HttpGet]
+        public ActionResult GetAllEmployeesData()
+        {
+            var result = repository.GetAllEmployees();
+            return View(result);
+        }
+        [HttpGet]
+        public ActionResult GetEmployee(int id)
+        {
+            var result1 = repository.GetEmployees(id);
+            return View(result1);
         }
     }
 }
