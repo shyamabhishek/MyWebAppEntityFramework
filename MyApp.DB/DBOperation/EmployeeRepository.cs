@@ -66,7 +66,7 @@ namespace MyApp.DB.DBOperation
                             Country = x.Address.Country,
                         }
 
-                    }) .ToList();
+                    }).ToList();
                 return result;
 
             }
@@ -76,7 +76,7 @@ namespace MyApp.DB.DBOperation
             using (var context = new EmployeeDBEntities())
             {
                 var result = context.Employee
-                    .Where(x=>x.id==id)
+                    .Where(x => x.id == id)
                     .Select(x => new EmployeeModel()
                     {
                         Id = x.id,
@@ -97,8 +97,67 @@ namespace MyApp.DB.DBOperation
                 return result;
 
             }
-            
+
         }
 
+        public bool UpdateEmployee(int id, EmployeeModel emp)
+        {
+            try
+            {
+                using (var context = new EmployeeDBEntities())
+                {
+                    //var data = context.Employee.FirstOrDefault(x => x.id == id);
+                    var data = new Employee();
+                    if (data != null)
+                    {
+                        data.id = id;
+                        data.FirstName = emp.FirstName;
+                        data.LastName = emp.LastName;
+                        data.Email = emp.Email;
+                        data.Phone = emp.Phone;
+                        data.AddressId = emp.Address.Id;
+
+                        
+                        var dataAddress = new Address();
+
+                        if (dataAddress != null)
+                        {
+                            dataAddress.id = emp.Address.Id;
+                            dataAddress.Details = emp.Address.Details;
+                            dataAddress.City = emp.Address.City;
+                            dataAddress.State = emp.Address.State;
+                            dataAddress.Country = emp.Address.Country;
+                            
+
+                        }
+                    context.Entry(data).State = System.Data.Entity.EntityState.Modified;
+                    context.Entry(dataAddress).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
+                    }
+                }
+                    return true;
+            } 
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+
+        }
+
+        public bool DeleteEmployee(int id)
+        {
+            using (var context = new EmployeeDBEntities())
+            {
+                var data = context.Employee.FirstOrDefault(x => x.id == id);
+                if (data != null)
+                {
+                    context.Employee.Remove(data);
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ using MyApp.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 
@@ -30,7 +31,7 @@ namespace MyWebAppEntityFramework.Controllers
                 {
                     ModelState.Clear();
                     ViewBag.successMessage = "Data Added Sucessfully";
-                    return RedirectToAction("GetAllEmployeesData");
+                    RedirectToAction("GetAllEmployeesData");
                 }
             }
             return View();
@@ -47,5 +48,42 @@ namespace MyWebAppEntityFramework.Controllers
             var result1 = repository.GetEmployees(id);
             return View(result1);
         }
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var result = repository.GetEmployees(id);
+            return View(result);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(int id, EmployeeModel emp)
+        {
+            if (ModelState.IsValid)
+            {
+                bool isResult = repository.UpdateEmployee(id, emp);
+                if (isResult)
+                {
+                    return RedirectToAction("GetAllEmployeesData");
+                }
+            }
+            return View(emp);
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            var result = repository.GetEmployees(id);
+            return View(result);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id, EmployeeModel emp)
+        {
+            bool result = repository.DeleteEmployee(id);
+            return RedirectToAction("GetAllEmployeesData");
+            
+        }
+        
+        
     }
 }
