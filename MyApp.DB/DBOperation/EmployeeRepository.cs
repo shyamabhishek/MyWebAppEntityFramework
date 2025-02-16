@@ -117,7 +117,7 @@ namespace MyApp.DB.DBOperation
                         data.Phone = emp.Phone;
                         data.AddressId = emp.Address.Id;
 
-                        
+
                         var dataAddress = new Address();
 
                         if (dataAddress != null)
@@ -127,16 +127,16 @@ namespace MyApp.DB.DBOperation
                             dataAddress.City = emp.Address.City;
                             dataAddress.State = emp.Address.State;
                             dataAddress.Country = emp.Address.Country;
-                            
+
 
                         }
-                    context.Entry(data).State = System.Data.Entity.EntityState.Modified;
-                    context.Entry(dataAddress).State = System.Data.Entity.EntityState.Modified;
-                    context.SaveChanges();
+                        context.Entry(data).State = System.Data.Entity.EntityState.Modified;
+                        context.Entry(dataAddress).State = System.Data.Entity.EntityState.Modified;
+                        context.SaveChanges();
                     }
                 }
-                    return true;
-            } 
+                return true;
+            }
             catch (Exception ex)
             {
 
@@ -149,14 +149,30 @@ namespace MyApp.DB.DBOperation
         {
             using (var context = new EmployeeDBEntities())
             {
-                var data = context.Employee.FirstOrDefault(x => x.id == id);
-                if (data != null)
+                try
                 {
-                    context.Employee.Remove(data);
+                    var employee = new Employee()
+                    {
+                        id = id
+                    };
+                    context.Entry(employee).State = System.Data.Entity.EntityState.Deleted;
                     context.SaveChanges();
                     return true;
+
                 }
-                return false;
+                catch (Exception ex)
+                {
+
+                    return false ;
+                }
+                //var data = context.Employee.FirstOrDefault(x => x.id == id);
+                //if (data != null)
+                //{
+                //    context.Employee.Remove(data);
+                //    context.SaveChanges();
+                //    return true;
+                //}
+                //return false;
             }
         }
     }

@@ -1,7 +1,9 @@
 ﻿using MyApp.DB.DBOperation;
 using MyApp.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
@@ -81,9 +83,26 @@ namespace MyWebAppEntityFramework.Controllers
         {
             bool result = repository.DeleteEmployee(id);
             return RedirectToAction("GetAllEmployeesData");
-            
+
         }
-        
-        
+
+        [HttpGet]
+        public ActionResult GetEmployeeByJquery()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult GetEmployeeDataByJquery()
+        {
+            var result = repository.GetAllEmployees().FirstOrDefault();
+            var jsonData = JsonConvert.SerializeObject(result);
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult PostEmployeeData(EmployeeModel emp)
+        {
+            return Json(emp, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

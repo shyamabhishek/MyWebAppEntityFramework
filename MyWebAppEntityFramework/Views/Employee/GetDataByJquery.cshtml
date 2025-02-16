@@ -1,0 +1,30 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GetDataByJquery</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div>
+        <h2>Welcome to jquery page</h2>
+        <label id="lbltext"></label>
+    </div>
+</body>
+</html>
+
+<script src="~/Scripts/jquery-3.7.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#lbltext").text("This is my label value");
+    });
+
+</script>

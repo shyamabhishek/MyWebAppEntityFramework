@@ -1,0 +1,185 @@
+﻿@model MyApp.Model.EmployeeModel
+
+@{
+    ViewBag.Title = "GetEmployeeByJquery";
+}
+
+<h2>GetEmployeeByJquery</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div>
+    <div class="form-horizontal">
+        <div class="mb-3">
+            @Html.LabelFor(model => model.FirstName, "First Name", htmlAttributes: new { @class = "form-label fw-bold" })
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.LastName, "Last Name", htmlAttributes: new { @class = "form-label fw-bold" })
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label fw-bold" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "form-label fw-bold" })
+            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Address.Details, "Address Details", htmlAttributes: new { @class = "form-label fw-bold" })
+            @Html.EditorFor(model => model.Address.Details, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+            @Html.ValidationMessageFor(model => model.Address.Details, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Address.City, htmlAttributes: new { @class = "form-label fw-bold" })
+            @Html.EditorFor(model => model.Address.City, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+            @Html.ValidationMessageFor(model => model.Address.City, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Address.State, htmlAttributes: new { @class = "form-label fw-bold" })
+            @Html.EditorFor(model => model.Address.State, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+            @Html.ValidationMessageFor(model => model.Address.State, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Address.Country, htmlAttributes: new { @class = "form-label fw-bold" })
+            @Html.EditorFor(model => model.Address.Country, new { htmlAttributes = new { @class = "form-control rounded-3 shadow-sm" } })
+            @Html.ValidationMessageFor(model => model.Address.Country, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <input type="submit" onclick="GetFormData" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+@*<div>
+        <lable>FirstName :</lable>
+        <h2 id="FirstName" class="f1">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </h2>
+        <lable>LastName :</lable>
+        <h2 id="LastName" class="f2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </h2>
+        <label>Email :</label>
+        <h2 id="Email" class="f3">
+            @Html.DisplayNameFor(model => model.Email)
+        </h2>
+        <label>Phone :</label>
+        <h2 id="Phone" class="f4">
+            @Html.DisplayNameFor(model => model.Phone)
+        </h2>
+
+    </div>*@
+@*<tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AddressId)
+        </th>
+        <th></th>
+    </tr>*@
+
+
+@*@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+    }*@
+@*<div>
+        <input type="button" value="Click Me" onclick="GetData()" />
+    </div>*@
+<script>
+    //function GetData() {
+    //    $.ajax({
+    //        url: "/Employee/GetEmployeeDataByJquery",
+    //        method: "GET",
+    //        success: function (data) {
+    //            //console.log(data);
+    //            data = JSON.parse(data);
+    //            //console.log(data);
+    //            $(".f1").text(data.FirstName)
+    //            $(".f2").text(data.LastName)
+    //            $(".f3").text(data.Email)
+    //            $(".f4").text(data.Phone)
+    //        },
+    //        error: function (err) {
+    //            console.log();
+    //        }
+    //    });
+    //}
+    function GetFormData() {
+        //var FirstName = $("#FirstName").val();
+        //var LastName = $("#LastName").val();
+        //var Email = $("#Email").val();
+        //var Phone = $("#Phone").val();
+        //var Details = $("#Detals").val();
+        //var City = $("#City").val();
+        //var State = $("#State").val();
+        //var Country = $("#Country").val();
+
+        var empObj = {
+            FirstName: $("#FirstName").val(),
+            LastName: $("#LastName").val(),
+            Email: $("#Email").val(),
+            Phone: $("#Phone").val(),
+
+        }
+        PostData(empObj);
+    }
+    function PostData(data) {
+        $.ajax({
+            url: "/Employee/PostEmployeeData",
+            method: "POST",
+            data = data,
+            success: function (data) {
+                alert(data);
+            },
+            error: function (err) {
+                console.log();
+            }
+        });
+    }
+
+</script>
